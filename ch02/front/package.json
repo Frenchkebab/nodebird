@@ -1,0 +1,17 @@
+{
+  "name": "front",
+  "version": "1.0.0",
+  "description": "` npm i antd styled-components @ant-design/icons`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "antd": "^4.22.3",
+    "styled-components": "^5.3.5"
+  }
+}
