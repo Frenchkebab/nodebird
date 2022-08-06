@@ -5,7 +5,7 @@ import { Menu } from 'antd';
 const AppLayout = ({ children }) => {
   return (
     <div>
-      <Menu>
+      <Menu mode="horizontal">
         <Menu.Item>
           <Link href="/">
             <a>NodeBird</a>
@@ -22,6 +22,7 @@ const AppLayout = ({ children }) => {
           </Link>
         </Menu.Item>
       </Menu>
+      {children}
     </div>
   );
 };

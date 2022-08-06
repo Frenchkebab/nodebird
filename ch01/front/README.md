@@ -20,3 +20,32 @@
 `npm i -D eslint-plugin-import`
 
 `npm i -D eslint-plugin-react-hooks`
+
+### AppLayout과 \_app.js
+
+`Layout`의 경우 일부 공통 (컴포넌트로 감싸주는 경우),
+`_app`의 경우 pages의 모든 페이지 컴포넌트에 공통적으로 들어감
+
+### Head 수정하기
+
+`_app.js`
+
+```javascript
+import Head from 'next/head';
+
+const NodeBird = ({ Component }) => {
+  return (
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <title>NodeBird</title>
+      </Head>
+      <Component />
+    </>
+  );
+};
+```
+
+이렇게 `head` 태그의 내용을 수정할 수 있다.
+
+개별 수정을 원할 경우 `pages/` 안의 개별 컴포넌트에 설정을 해주면 됨
