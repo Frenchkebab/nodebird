@@ -10,33 +10,44 @@ const SearchInput = styled(Input.Search)`
 
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
-import Search from 'antd/lib/transfer/search';
 
 const AppLayout = ({ children }) => {
   const [isLoggedIn, setIsloggedIn] = useState(false);
+  const menuItems = [
+    {
+      label: (
+        <Link href="/">
+          <a>NodeBird</a>
+        </Link>
+      ),
+      key: 'home',
+    },
+    {
+      label: (
+        <Link href="/profile">
+          <a>Profile</a>
+        </Link>
+      ),
+      key: 'profile',
+    },
+    {
+      label: <SearchInput enterButton />,
+      key: 'searchInput',
+    },
+    {
+      label: (
+        <Link href="/signup">
+          <a>Signup</a>
+        </Link>
+      ),
+      key: 'signup',
+    },
+  ];
 
   return (
     <div>
-      <Menu mode="horizontal">
-        <Menu.Item>
-          <Link href="/">
-            <a>NodeBird</a>
-          </Link>
-        </Menu.Item>
-        <Menu.Item>
-          <Link href="/profile">
-            <a>Profile</a>
-          </Link>
-        </Menu.Item>
-        <Menu.Item>
-          <SearchInput enterButton />
-        </Menu.Item>
-        <Menu.Item>
-          <Link href="/signup">
-            <a>Signup</a>
-          </Link>
-        </Menu.Item>
-      </Menu>
+      <Menu mode="horizontal" items={menuItems} />
+
       <Row gutter={8}>
         {/* 24개의 col으로 나뉨 */}
         <Col xs={24} md={6}>

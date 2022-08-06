@@ -160,3 +160,47 @@ const style = useMemo(() => ({ marginTop: 10 }), []);
 ```
 
 `Form`은 **submit**이 되면 `onFinish`함수가 호출됨
+
+## 프로필 페이지 만들기
+
+### 컴포넌트를 코딩할 때
+
+```javascript
+<div>
+
+</div>
+<div>
+
+</div>
+<div>
+
+</div>
+```
+
+이렇게 자잘한 것부터 하지 말고,
+
+큼직큼직하게 컴포넌트 단위로 먼저 코딩할 것!
+
+```javascript
+const Profile = () => {
+  const followerList = [{ nickname: 'frenchkebab' }, { nickname: 'junghyun' }, { nickname: 'hermine' }];
+  const followingList = [{ nickname: 'frenchkebab' }, { nickname: 'junghyun' }, { nickname: 'hermine' }];
+
+  return (
+    <>
+      <Head>
+        <title>Profile | NodeBird</title>
+      </Head>
+      <AppLayout>
+        <NicknameEditForm />
+        <Followlist header="following list" data={followingList} />
+        <Followlist header="follower list" data={followingList} />
+      </AppLayout>
+    </>
+  );
+};
+```
+
+이렇게 더미 데이터를 만들고 `props`까지 다 넣어서 **컴포넌트 단위**로 밑그림을 그리는 것이 낫다
+
+참고로 `Form`같은 경우, 매우 번거로우므로 **React Form**같은 라이브러리를 사용하도록 하자
