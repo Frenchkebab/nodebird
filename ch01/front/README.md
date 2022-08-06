@@ -90,3 +90,65 @@ const NodeBird = ({ Component }) => {
 ```
 
 보안을 위해 `rel="_noreferrer noopener"`을 추가해줌!
+
+## antd 커스텀하기
+
+### `style={{ marginTop: 10 }}` 이렇게 객체로 넣지 말 것
+
+```javascript
+{} === {}; // false
+```
+
+객체끼리는 생긴 것만 같게 나오고, 모든 객체는 서로 다름
+-> 객체때문에 컴포넌트가 리렌더링되는 일이 생김
+
+따라서 그냥 style을 위한 컴포넌트를 새로 하나 만드는 것이 낫다!
+
+```javascript
+import styled from 'styled-components';
+
+const ButtonWrapper = styled.div`
+  margin-top: 10px;
+`; // 해당 스타일이 적용된 div 컴포넌트가 생김
+```
+
+하지만 성능에 크게 영향이 없다면 그냥 인라인 스타일 써도 된다.
+너무 집착할 필요는 없음!
+
+### antd의 컴포넌트 커스텀하기
+
+```javascript
+<Input.Search enterButton style={{ verticalAlign: 'middle' }} />
+```
+
+얘도 이렇게 style을 덮어 씌울 수 있음
+
+```javascript
+const SearchInput = styled(Input.Search)`
+  vertical-align: middle;
+`;
+```
+
+### styled component를 사용하고 싶지 않을 경우 -> useMemo 사용
+
+```javascript
+const style = useMemo(() => ({ marginTop: 10 }), []);
+```
+
+이런 식으로 하면 리렌더링이 되더라도 같은 객체가 유지됨!
+
+### 함수형 컴포넌트의 리렌더링
+
+함수형 컴포넌트에서는 컴포넌트 함수의 안의 부분이 다시 실행된다.
+
+`useCallback`, `useMemo` 등은 이전과 동일하므로 바뀐게 없다고 인식함.
+
+근데 `return`되는 부분에 이전 상태에서 **바뀌는 부분**이 있다면 그 부분만 다시 그려준다.
+
+여기서 `style={{}}`을 쓴다면, `{}` 부분이 이전과 다른 객체로 인식하여 다시 그리게 된다.
+
+하지만 스타일은 바뀔 필요가 없으므로 `styled-component` 혹은 `useMemo`를 사용하여 다시 렌더링이 되지 않도록 한다.
+
+(여기서 return 부분을 **Virtual Dom**이라고 생각하면 됨. 이전 compomnent의 **Virtual Dom**과 이후의 **Virtual Dom**을 비교함)
+
+따라서 리렌더링 자체를 신경쓸 필요는 없고 실제적으로 달라진 부분이 무엇인지를 생각하면 된다.
