@@ -40,7 +40,7 @@ const AppLayout = ({ children }) => {
       <Row gutter={8}>
         {/* 24개의 col으로 나뉨 */}
         <Col xs={24} md={6}>
-          {isLoggedIn ? <UserProfile /> : <LoginForm />}
+          {isLoggedIn ? <UserProfile setIsLoggedIn={setIsloggedIn} /> : <LoginForm setIsLoggedIn={setIsloggedIn} />}
         </Col>
         <Col xs={24} md={12}>
           {children}

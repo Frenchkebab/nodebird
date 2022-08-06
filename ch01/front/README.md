@@ -152,3 +152,11 @@ const style = useMemo(() => ({ marginTop: 10 }), []);
 (여기서 return 부분을 **Virtual Dom**이라고 생각하면 됨. 이전 compomnent의 **Virtual Dom**과 이후의 **Virtual Dom**을 비교함)
 
 따라서 리렌더링 자체를 신경쓸 필요는 없고 실제적으로 달라진 부분이 무엇인지를 생각하면 된다.
+
+## 더미데이터로 로그인하기
+
+```javascript
+<Form onFinish={onSubmitForm}>...</Form>
+```
+
+`Form`은 **submit**이 되면 `onFinish`함수가 호출됨
