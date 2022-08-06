@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Menu } from 'antd';
+import { Menu, Input, Row, Col } from 'antd';
+
+import UserProfile from './UserProfile';
+import LoginForm from './LoginForm';
 
 const AppLayout = ({ children }) => {
+  const [isLoggedIn, setIsloggedIn] = useState(false);
+
   return (
     <div>
       <Menu mode="horizontal">
@@ -17,12 +23,28 @@ const AppLayout = ({ children }) => {
           </Link>
         </Menu.Item>
         <Menu.Item>
+          <Input.Search enterButton style={{ verticalAlign: 'middle' }} />
+        </Menu.Item>
+        <Menu.Item>
           <Link href="/signup">
             <a>Signup</a>
           </Link>
         </Menu.Item>
       </Menu>
-      {children}
+      <Row gutter={8}>
+        {/* 24개의 col으로 나뉨 */}
+        <Col xs={24} md={6}>
+          {isLoggedIn ? <UserProfile /> : <LoginForm />}
+        </Col>
+        <Col xs={24} md={12}>
+          {children}
+        </Col>
+        <Col xs={24} md={6}>
+          <a href="https://github.com/frenchkebab" target="_blank" rel="_noreferrer noopener">
+            Made by frenchkebab
+          </a>
+        </Col>
+      </Row>
     </div>
   );
 };
