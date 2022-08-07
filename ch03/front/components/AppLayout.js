@@ -1,8 +1,9 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Menu, Input, Row, Col } from 'antd';
 import styled from 'styled-components';
+
+import { useSelector } from 'react-redux';
 
 const SearchInput = styled(Input.Search)`
   vertical-align: middle;
@@ -12,7 +13,8 @@ import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 
 const AppLayout = ({ children }) => {
-  const [isLoggedIn, setIsloggedIn] = useState(false);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   const menuItems = [
     {
       label: (
@@ -51,7 +53,7 @@ const AppLayout = ({ children }) => {
       <Row gutter={8}>
         {/* 24개의 col으로 나뉨 */}
         <Col xs={24} md={6}>
-          {isLoggedIn ? <UserProfile setIsLoggedIn={setIsloggedIn} /> : <LoginForm setIsLoggedIn={setIsloggedIn} />}
+          {isLoggedIn ? <UserProfile /> : <LoginForm setIsLoggedIn={setIsloggedIn} />}
         </Col>
         <Col xs={24} md={12}>
           {children}

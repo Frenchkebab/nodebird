@@ -227,3 +227,144 @@ prev.name; // 'junghyun'
 따라서 배포 모드일 경우에는 메모리 문제가 생기지는 않는다.
 
 ... 연산자를 통해서 객체를 배열을 얕은 복사를 가져와도 redux는 새로운 객체로 인식하게 된다.
+
+## 3. 리덕스 실제로 구현하기
+
+`store/configureStore.js`
+
+```javascript
+import { createWrapper } from 'next-redux-wrapper';
+import { createStore } from 'redux';
+
+import reducer from '../reducers/index';
+
+const configureStore = () => {
+  const store = createStore(reducer);
+  store.dispatch({
+    type: 'CHANGE_NICKNAME',
+    data: '',
+  });
+  return store;
+};
+
+// debug 모드
+const wrapper = createWrapper(configureStore, { debug: process.env.NODE_ENV === 'development' });
+
+export default wrapper;
+```
+
+`reducers/index.js`
+
+```javascript
+const initialState = {
+  name: 'frenchkebab',
+  age: 27,
+  password: 'babo',
+};
+
+const changeNickname = {
+  type: 'CHANGE_NICKNAME',
+  data: 'junghyun',
+};
+
+const changeNickname = {
+  type: 'CHANGE_NICKNAME',
+  data: '킴카누',
+};
+
+// (이전상태, 액션) => 다음상태를 return
+const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'CHANGE_NICKNAME':
+      return {
+        ...state,
+        name: action.data,
+      };
+  }
+};
+
+export default rootReducer;
+```
+
+```javascript
+const changeNickname = (data) => {
+  return {
+    type: 'CHANGE_NICKNAME',
+    data,
+  };
+};
+```
+
+이렇게 **action**을 하나하나 정의해 주기 번거로우므로 동적으로 data를 받아서 action을 생성해주는
+`actionCreater`를 만든다.
+
+이렇게 **actionCreator** 하나만 만들면 사용자가 원하는 대로 만들 수 있다
+
+```javascript
+store.dispatch(changeNickname('frenchkebab'));
+```
+
+### action을 만들어 dispatch 하면
+
+**reducer**에 따라서 다음 상태가 나오고, 이전 상태와 다음 상태가 바뀌었다는 것이 확인되면,
+알아서 해당 데이터를 사용하는 컴포넌트들에게 쫙 뿌려짐.
+
+```javascript
+const initialState = {
+  user: {
+    isLoggedIn: false,
+    user: null,
+    signUpdata: {},
+    loginData: {},
+  },
+  post: {
+    mainPosts: [],
+  },
+};
+
+const login = (data) => {
+  return {
+    type: 'LOG_IN',
+    data,
+  };
+};
+
+const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'LOG_IN':
+      // 불변성 때문에 코드가 좀 지저분해짐
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          isLoggedIn: true,
+          user: action.data,
+        },
+      };
+  }
+};
+```
+
+```javascript
+const AppLayout = ({ children }) => {
+  const [isLoggedIn, setIsloggedIn] = useState(false);
+```
+
+이제 여기의 `isLoggedIn` state는 필요가 없어졌다!
+
+### 이제 사용해보자
+
+components/AppLayout.js
+
+```javascript
+import { useSelector } from 'react-redux'; // redux와 react를 연결해줌
+
+const AppLayout = ({ children }) => {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // state가 바뀌면 자동으로 컴포넌트 리렌덜이
+
+  ...
+
+}
+```
+
+이제 `setIsLoggedIn` 이런 함수들 props로 더이상 넘겨줄 필요가 없어졌다.
