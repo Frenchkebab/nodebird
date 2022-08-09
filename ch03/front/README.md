@@ -360,7 +360,7 @@ components/AppLayout.js
 import { useSelector } from 'react-redux'; // redux와 react를 연결해줌
 
 const AppLayout = ({ children }) => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // state가 바뀌면 자동으로 컴포넌트 리렌덜이
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // state가 바뀌면 자동으로 컴포넌트 리렌더링
 
   ...
 
