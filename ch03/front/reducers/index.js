@@ -55,6 +55,7 @@ const rootReducer = (state = initialState, action) => {
         },
       };
 
+    // ★★ 얘를 빠뜨리면 reducer 초기화 시 실행이 되는 경우 return값이 undefined가 됨
     default:
       return state;
   }
