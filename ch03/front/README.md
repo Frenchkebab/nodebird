@@ -368,3 +368,31 @@ const AppLayout = ({ children }) => {
 ```
 
 이제 `setIsLoggedIn` 이런 함수들 props로 더이상 넘겨줄 필요가 없어졌다.
+
+## Middleware와 Redux devtools
+
+### 설치
+
+`npm i redux-devtools-extention`
+
+이걸 설치하면 크롬의 Redux 익스텐션에서 로그인을 확인할 수 있다.
+
+### HYDRATE
+
+HYDRATE는 getInitialProps가 거의 안쓰이고 getStaticProps와 getServersideProps 두개가 쓰이면서
+SSR이 완전히 달라져서 사용되게 됨.
+
+### 포트번호를 바꾸고 싶은 경우
+
+```json
+  "scripts": {
+    "dev": "next -p 3060",
+    "build": "next build"
+  },
+```
+
+이렇게 `-p 포트번호` 를써주면 됨
+
+### history
+
+모든 것들을 **action**으로 만들어 불변성을 지키면서 history를 쌓아줌
