@@ -1,64 +1,37 @@
 import { HYDRATE } from 'next-redux-wrapper';
 
-const initialState = {
-  user: {
-    isLoggedIn: false,
-    user: null,
-    signUpdata: {},
-    loginData: {},
+// 다른 reducer들 import
+import user from './user';
+import post from './post';
+import { combineReducers } from 'redux';
+
+// user와 post의 initialState는 compbineReducers가 알아서 합쳐서 넣어줌
+const rootReducer = combineReducers({
+  // HYDRATE 사용을 위해 index reducer를 추가해줌
+  index: (state = {}, action) => {
+    switch (action.type) {
+      case HYDRATE:
+        console.log('HYDRATE', action);
+        return {
+          ...state,
+          ...action.paylload,
+        };
+
+      // ★★ 얘를 빠뜨리면 reducer 초기화 시 실행이 되는 경우 return값이 undefined가 됨
+      default:
+        return state;
+    }
   },
-  post: {
-    mainPosts: [],
-  },
-};
+  user,
+  post,
+});
 
-export const loginAction = (data) => {
-  return {
-    type: 'LOG_IN',
-    data,
-  };
-};
-
-export const logoutAction = () => {
-  return {
-    type: 'LOG_OUT',
-  };
-};
-
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case HYDRATE:
-      console.log('HYDRATE', action);
-      return {
-        ...state,
-        ...action.paylload,
-      };
-
-    case 'LOG_IN':
-      // 불변성 때문에 코드가 좀 지저분해짐
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: true,
-          user: action.data,
-        },
-      };
-
-    case 'LOG_OUT':
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: false,
-          user: null,
-        },
-      };
-
-    // ★★ 얘를 빠뜨리면 reducer 초기화 시 실행이 되는 경우 return값이 undefined가 됨
-    default:
-      return state;
-  }
-};
+// 아래에서 index reducer 1개만 추가된 것!
+/* 
+  const rootReducer = combineReducer({
+    user,
+    post
+  })
+*/
 
 export default rootReducer;

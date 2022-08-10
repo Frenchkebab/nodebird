@@ -396,3 +396,5 @@ SSR이 완전히 달라져서 사용되게 됨.
 ### history
 
 모든 것들을 **action**으로 만들어 불변성을 지키면서 history를 쌓아줌
+
+## Reducer 쪼개기

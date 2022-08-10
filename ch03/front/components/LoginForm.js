@@ -1,12 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import useInput from '../hooks/useInput';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
 
 import { useDispatch } from 'react-redux';
-import { loginAction } from '../reducers/index';
+import { loginAction } from '../reducers/user';
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;

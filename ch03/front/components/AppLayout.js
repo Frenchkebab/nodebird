@@ -13,7 +13,7 @@ import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 
 const AppLayout = ({ children }) => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   const menuItems = [
     {
